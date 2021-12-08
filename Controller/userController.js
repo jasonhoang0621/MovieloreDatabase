@@ -2,8 +2,8 @@ const userService = require('../Service/userService');
 
 class userController {
     async getUser(req, res) {
-        const account = await userService.validateLogin(req.body.email, req.body);
-        if (account) res.send(valid);
+        const account = await userService.validateLogin(req.body.email, req.body.password);
+        if (account) res.send(account);
         else res.send({ code: 1 }); //no user or wrong password
     }
 

@@ -1,6 +1,6 @@
 const user = require('../Model/user');
 const bcrypt = require('bcryptjs');
-const sale = 10;
+const salt = 10;
 
 const validateLogin = async (email, password) => {
     try {
@@ -21,13 +21,12 @@ const createNewUser = async (newAccount) => {
 
         for (let i = 0; i < emails.length; i++) {
             if (newAccount.email === emails[i].email) return 1; //same email
-            else {
-                newAccount.password = await bcrypt.hash(newAccount.password, salt);
-                const newUser = new user({ ...newAccount });
-                await newUser.save();
-                return 0;
-            }
         }
+
+        newAccount.password = await bcrypt.hash(newAccount.password, salt);
+        const newUser = new user({ ...newAccount });
+        await newUser.save();
+        return 0; //create success
     } catch (err) {
         console.log(err);
     }
