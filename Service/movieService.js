@@ -5,7 +5,14 @@ const getAll = async () => {
     return list;
 }
 
+const deleteReview = async (id) => {
+    const review = await movie.findOne({ _id: id });
+
+    //xóa ảnh trên cloudianry
+
+    await review.destroy();
+}
 module.exports = {
     getAll,
-
+    deleteReview,
 }
