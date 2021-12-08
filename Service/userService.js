@@ -33,7 +33,7 @@ const createNewUser = async (newAccount) => {
     }
 }
 
-const updateInfo = (newInfo) => {
+const updateInfo = async (newInfo) => {
     try {
         const emails = await user.find({ email: newInfo.email });
 
