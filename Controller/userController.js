@@ -23,9 +23,11 @@ class userController {
     }
 
     async updatePassword(req, res) {
-        const { id, newPass } = req.body; //send id, dont send _id
-        await userService.updatePassword(id, newPass);
-        res.send({ code: 0 }); //suceess
+        const newPass = req.body.newPass;
+        const id = req.params.id;
+        const password = await userService.updatePassword(id, newPass);
+        if (password) res.send({ password }) //new pass
+        else res.send({ code: 1 }) //fail code
     }
 }
 

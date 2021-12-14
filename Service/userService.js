@@ -49,8 +49,14 @@ const updateInfo = async (id, newInfo) => {
 }
 
 const updatePassword = async (id, newPass) => {
-    const password = await bcrypt.hash(newPass, salt);
-    await user.updateOne({ _id, id }, { password: password }); //syntax???
+    try {
+        const password = await bcrypt.hash(newPass, salt);
+        await user.updateOne({ _id: id }, { password: password }); //syntax???
+        return password; //success
+    } catch (err) {
+        console.log(err);
+        return null; //fail
+    }
 }
 
 module.exports = {

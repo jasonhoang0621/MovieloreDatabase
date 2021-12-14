@@ -4,6 +4,7 @@ const router = express.Router();
 const userController = require('../Controller/userController');
 
 router.post('/update/:id', userController.updateInfo);
+router.post('/password/:id', userController.updatePassword);
 router.post('/authenticate', userController.getUser);
 router.post('/', userController.createUser);
 
