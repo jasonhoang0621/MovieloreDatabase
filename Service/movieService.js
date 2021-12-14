@@ -1,5 +1,6 @@
 const movie = require('../Model/movie');
 const mongoose = require('mongoose');
+const cloudinary = require('../utils/cloudinary');
 
 const getAll = async () => {
     const list = await movie.find({});
@@ -23,11 +24,13 @@ const createNew = async (content) => {
 }
 
 const deleteReview = async (id) => {
-    const review = await movie.findOne({ _id: id });
-
-    //xóa ảnh trên cloudianry
-
-    await review.destroy();
+    try {
+        const review = await movie.findOne({ _id: id });
+        await cloudinary.uploader.destroy(review.poster.public_id);
+        await movie.deleteOne({ _id: id })
+    } catch (err) {
+        console.log(err);
+    }
 }
 module.exports = {
     getAll,

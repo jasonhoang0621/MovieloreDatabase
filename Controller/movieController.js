@@ -18,9 +18,15 @@ class movieController {
     }
 
     async deleteReview(req, res) {
-        const id = req.body;
-        await movieService.deleteReview(id);
-        res.end(); // ????
+        try {
+            const id = req.params.id;
+            await movieService.deleteReview(id);
+            res.send({ error: 0 }); //success
+        }
+        catch (err) {
+            console.log(err);
+            res.send({ error: 1 }) //fail
+        }
     }
 }
 
