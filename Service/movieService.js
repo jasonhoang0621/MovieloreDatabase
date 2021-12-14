@@ -1,4 +1,5 @@
 const movie = require('../Model/movie');
+const mongoose = require('mongoose');
 
 const getAll = async () => {
     const list = await movie.find({});
@@ -7,9 +8,12 @@ const getAll = async () => {
 
 const createNew = async (content) => {
     try {
-        return await movie.create({ ...content });
+        const _id = mongoose.Types.ObjectId();
+        await movie.create({ _id, ...content });
+        return { _id, ...content }
     } catch (err) {
         console.log(err)
+        return null;
     }
 }
 

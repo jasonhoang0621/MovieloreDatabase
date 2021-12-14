@@ -8,8 +8,8 @@ class movieController {
 
     async createNewReview(req, res) {
         try {
-            await movieService.createNew(req.body);
-            res.send({ error: 0 }); //success
+            const newMovie = await movieService.createNew(req.body);
+            res.send({ newMovie }); //success
         } catch (err) {
             console.log(err);
             res.send({ error: 1 }) //fail
