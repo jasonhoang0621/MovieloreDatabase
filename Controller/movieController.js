@@ -7,7 +7,14 @@ class movieController {
     }
 
     async createNewReview(req, res) {
-        await movieService.createNew(req.body);
+        try {
+            await movieService.createNew(req.body);
+            res.send({ error: 0 }); //success
+        } catch (err) {
+            console.log(err);
+            res.send({ error: 1 }) //fail
+        }
+
     }
 
     async deleteReview(req, res) {
