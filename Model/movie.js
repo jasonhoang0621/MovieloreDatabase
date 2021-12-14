@@ -15,7 +15,7 @@ const movie = new Schema({
     plot: { type: String },
     review: { type: Array },
     rate: { type: Number },
-    poster: { type: String },
+    poster: { type: Object },
     country: { type: String },
     type: { type: String },
     trailer: { type: String }

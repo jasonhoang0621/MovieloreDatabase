@@ -5,6 +5,14 @@ const getAll = async () => {
     return list;
 }
 
+const createNew = async (content) => {
+    try {
+        return await movie.create({ ...content });
+    } catch (err) {
+        console.log(err)
+    }
+}
+
 const deleteReview = async (id) => {
     const review = await movie.findOne({ _id: id });
 
@@ -15,4 +23,5 @@ const deleteReview = async (id) => {
 module.exports = {
     getAll,
     deleteReview,
+    createNew
 }

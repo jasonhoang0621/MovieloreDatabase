@@ -16,7 +16,8 @@ class userController {
 
     async updateInfo(req, res) {
         const newInfo = req.body;
-        const success = await userService.updateInfo(newInfo);
+        const id = req.params.id
+        const success = await userService.updateInfo(id, newInfo);
         if (success === 1) res.send({ code: 1 }); //duplicate email
         else res.send({ code: 0 }); //update success
     }

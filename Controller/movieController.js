@@ -6,6 +6,10 @@ class movieController {
         res.send(list);
     }
 
+    async createNewReview(req, res) {
+        await movieService.createNew(req.body);
+    }
+
     async deleteReview(req, res) {
         const id = req.body;
         await movieService.deleteReview(id);

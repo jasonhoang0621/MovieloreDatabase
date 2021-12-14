@@ -32,14 +32,14 @@ const createNewUser = async (newAccount) => {
     }
 }
 
-const updateInfo = async (newInfo) => {
+const updateInfo = async (id, newInfo) => {
     try {
         const emails = await user.find({ email: newInfo.email });
 
         for (let i = 0; i < emails.length; i++) {
-            if (newInfo.id !== emails[i]._id.toString()) return 1; //cannot have more than 1 email CHÚ Ý ID VÀ _ID
+            if (id !== emails[i]._id.toString()) return 1; //cannot have more than 1 email CHÚ Ý ID VÀ _ID
             else {
-                await user.updateOne({ _id: newInfo.id }, newInfo);
+                await user.updateOne({ _id: id }, newInfo);
                 return 0; //update success
             }
         }
