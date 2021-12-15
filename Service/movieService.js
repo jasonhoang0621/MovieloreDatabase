@@ -1,4 +1,5 @@
 const movie = require('../Model/movie');
+const user = require('../Model/user');
 const mongoose = require('mongoose');
 const cloudinary = require('../utils/cloudinary');
 
@@ -44,9 +45,11 @@ const updateReview = async (id, newInfo) => {
         console.log(err)
     }
 }
+
+
 module.exports = {
     getAll,
     deleteReview,
     createNew,
-    updateReview
+    updateReview,
 }

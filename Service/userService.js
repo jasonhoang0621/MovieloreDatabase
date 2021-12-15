@@ -59,10 +59,34 @@ const updatePassword = async (id, newPass) => {
     }
 }
 
+const addFav = async (userID, reviewID) => {
+    try {
+        const aUser = await user.findOne({ _id: userID });
+        aUser.favorite.push(reviewID);
+        // await user.updateOne({_id: userID, favorite: })
+        await aUser.save();
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+const removeFav = async (userID, reviewID) => {
+    try {
+        const aUser = await user.findOne({ _id: userID });
+        aUser.favorite = aUser.favorite.filter(item => item !== reviewID);
+        // await user.updateOne({_id: userID, favorite: })
+        await aUser.save();
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+
 module.exports = {
     validateLogin,
     createNewUser,
     updateInfo,
     updatePassword,
-
+    addFav,
+    removeFav
 }

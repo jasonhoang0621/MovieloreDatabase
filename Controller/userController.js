@@ -29,6 +29,30 @@ class userController {
         if (password) res.send({ password }) //new pass
         else res.send({ code: 1 }) //fail code
     }
+
+    async addFavorite(req, res) {
+        try {
+            const id = req.params.id;
+            const user = req.body.user;
+            await userService.addFav(user, id);
+            res.send({ error: 0 }) //success
+        } catch (err) {
+            console.log(err);
+            res.send({ error: 1 }); //fail
+        }
+    }
+
+    async removeFavorite(req, res) {
+        try {
+            const id = req.params.id;
+            const user = req.body.user;
+            await userService.removeFav(user, id);
+            res.send({ error: 0 }) //success
+        } catch (err) {
+            console.log(err);
+            res.send({ error: 1 }); //fail
+        }
+    }
 }
 
 module.exports = new userController
