@@ -28,6 +28,14 @@ class movieController {
             res.send({ error: 1 }) //fail
         }
     }
+
+    async updateReview(req, res) {
+        try {
+            console.log(req.body)
+        } catch (err) {
+            console.log(err);
+        }
+    }
 }
 
 module.exports = new movieController
