@@ -32,8 +32,21 @@ const deleteReview = async (id) => {
         console.log(err);
     }
 }
+
+const updateReview = async (id, newInfo) => {
+    try {
+        const oldMovie = await movie.findOne({ _id: id });
+        if (oldMovie.poster.public_id !== newInfo.poster.public_id) {
+            await cloudinary.uploader.destroy(oldMovie.poster.public_id);
+        }
+        await movie.updateOne({ _id: id }, { ...newInfo });
+    } catch (err) {
+        console.log(err)
+    }
+}
 module.exports = {
     getAll,
     deleteReview,
-    createNew
+    createNew,
+    updateReview
 }

@@ -31,9 +31,13 @@ class movieController {
 
     async updateReview(req, res) {
         try {
-            console.log(req.body)
+            const id = req.params.id;
+            const newInfo = req.body;
+            await movieService.updateReview(id, newInfo);
+            res.send({ error: 0 }); //success
         } catch (err) {
             console.log(err);
+            res.send({ error: 1 }); //fail
         }
     }
 }
