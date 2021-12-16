@@ -6,7 +6,7 @@ const salt = 10;
 
 const validateLogin = async (email, password) => {
     try {
-        const account = await user.findOne({ email: email });
+        const account = await user.findOne({ email: email }).lean();
         if (account) {
             const valid = bcrypt.compareSync(password, account.password);
             if (valid) {
