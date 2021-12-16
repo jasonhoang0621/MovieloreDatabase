@@ -10,7 +10,7 @@ const validateLogin = async (email, password) => {
         if (account) {
             const valid = bcrypt.compareSync(password, account.password);
             if (valid) {
-                const userNotic = await notification.findOne({ userID: userID }).lean();
+                const userNotic = await notification.findOne({ userID: account._id }).lean();
                 account.notifaction = userNotic.item;
                 return account;
             }
