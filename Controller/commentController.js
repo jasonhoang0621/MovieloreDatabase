@@ -33,6 +33,17 @@ class commentController {
             res.send({ error: 1 }); //fail
         }
     }
+
+    async updateComment(req, res) {
+        try {
+            const updateComment = req.body;
+            await commentService.updateAComment(updateComment)
+            res.send({ error: 0 }); //fail
+        } catch (err) {
+            console.log(err);
+            res.send({ error: 1 }); //fail
+        }
+    }
 }
 
 module.exports = new commentController;
