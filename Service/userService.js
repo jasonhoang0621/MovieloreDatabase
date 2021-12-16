@@ -123,6 +123,23 @@ const markAllRead = async (userID) => {
     }
 }
 
+const getUserProfile = async (userID) => {
+    try {
+        const userProfile = await user.findOne({ _id: userID });
+        return userProfile;
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+const updateUser = async (userID) => {
+    try {
+        await user.updateOne({ _id: userID }, { role: true });
+    } catch (err) {
+        console.log(err);
+    }
+}
+
 
 module.exports = {
     validateLogin,
@@ -134,5 +151,6 @@ module.exports = {
     getNotification,
     addNotification,
     markAllRead,
-
+    getUserProfile,
+    updateUser
 }

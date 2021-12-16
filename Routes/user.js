@@ -3,6 +3,10 @@ const router = express.Router();
 
 const userController = require('../Controller/userController');
 
+//see another
+router.get('/profile/:id', userController.getUserInformation)
+router.get('/upgrade/:id', userController.upgradeUser)
+
 //favorite
 router.post('/favorite/delete/:id', userController.removeFavorite);
 router.post('/favorite/:id', userController.addFavorite);

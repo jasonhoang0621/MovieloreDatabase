@@ -87,6 +87,28 @@ class userController {
             res.send({ error: 1 }); //fail
         }
     }
+
+    async getUserInformation(req, res) {
+        try {
+            const userID = req.params.id;
+            const user = await userService.getUserProfile(userID);
+            res.send(user) //success
+        } catch (err) {
+            console.log(err);
+            res.send({ error: 1 }); //fail
+        }
+    }
+
+    async upgradeUser(req, res) {
+        try {
+            const userID = req.params.id;
+            await userService.updateUser(userID)
+            res.send({ error: 0 }) //success
+        } catch (err) {
+            console.log(err);
+            res.send({ error: 1 }); //fail
+        }
+    }
 }
 
 module.exports = new userController
