@@ -53,6 +53,29 @@ class userController {
             res.send({ error: 1 }); //fail
         }
     }
+
+    async addNotification(req, res) {
+        try {
+            const userID = req.params.id;
+            const newNotic = req.body;
+            await userService.addNotification(userID, newNotic);
+            res.send({ error: 0 }) //success
+        } catch (err) {
+            console.log(err);
+            res.send({ error: 1 }); //fail
+        }
+    }
+
+    async getNotification(req, res) {
+        try {
+            const userID = req.params.id;
+            const userNotic = await userService.getNotification(userID);
+            res.send(userNotic) //success
+        } catch (err) {
+            console.log(err);
+            res.send({ error: 1 }); //fail
+        }
+    }
 }
 
 module.exports = new userController

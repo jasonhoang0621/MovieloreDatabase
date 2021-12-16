@@ -1,4 +1,6 @@
 const user = require('../Model/user');
+const notification = require('../Model/notification');
+const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const salt = 10;
 
@@ -7,7 +9,11 @@ const validateLogin = async (email, password) => {
         const account = await user.findOne({ email: email });
         if (account) {
             const valid = bcrypt.compareSync(password, account.password);
-            if (valid) return account;
+            if (valid) {
+                const userNotic = await notification.findOne({ userID: userID }).lean();
+                account.notifaction = userNotic.item;
+                return account;
+            }
             else return null;
         }
     } catch (err) {
@@ -23,9 +29,12 @@ const createNewUser = async (newAccount) => {
             if (newAccount.email === emails[i].email) return 1; //same email
         }
 
+        const mongoose = require('mongoose');
+        newAccount._id = mongoose.Types.ObjectId();
         newAccount.password = await bcrypt.hash(newAccount.password, salt);
         const newUser = new user({ ...newAccount });
         await newUser.save();
+        await notification.create({ userID: newAccount._id })
         return 0; //create success
     } catch (err) {
         console.log(err);
@@ -81,6 +90,25 @@ const removeFav = async (userID, reviewID) => {
     }
 }
 
+const getNotification = async (userID) => {
+    try {
+        const userNotic = await notification.findOne({ userID: userID }).lean();
+        return userNotic;
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+const addNotification = async (userID, newNotic) => {
+    try {
+        const userNotic = await notification.findOne({ userID: userID });
+        userNotic.item.push(newNotic);
+        await userNotic.save();
+    } catch (err) {
+        console.log(err);
+    }
+}
+
 
 module.exports = {
     validateLogin,
@@ -88,5 +116,7 @@ module.exports = {
     updateInfo,
     updatePassword,
     addFav,
-    removeFav
+    removeFav,
+    getNotification,
+    addNotification
 }
