@@ -1,5 +1,6 @@
 const user = require('../Model/user');
 const notification = require('../Model/notification');
+const comment = require('../Model/comment');
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const salt = 10;
@@ -99,13 +100,26 @@ const getNotification = async (userID) => {
     }
 }
 
-const addNotification = async (userID, newNotic) => {
+const addNotification = async (rootCommentId, newNotic) => {
     try {
-        const userNotic = await notification.findOne({ userID: userID });
+        const aComment = await comment.findOne({ _id: rootCommentId });
+        const userNotic = await notification.findOne({ userID: aComment.userID });
         userNotic.item.push(newNotic);
         await userNotic.save();
     } catch (err) {
         console.log(err);
+    }
+}
+
+const markAllRead = async (userID) => {
+    try {
+        const userNotic = await notification.findOne({ userID: userID });
+        if (userNotic.item.length !== 0) {
+            userNotic.item = userNotic.item.map(i => ({ ...i, status: false }))
+        }
+        await userNotic.save();
+    } catch (err) {
+        console.log(err)
     }
 }
 
@@ -118,5 +132,7 @@ module.exports = {
     addFav,
     removeFav,
     getNotification,
-    addNotification
+    addNotification,
+    markAllRead,
+
 }

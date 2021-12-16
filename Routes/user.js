@@ -8,6 +8,7 @@ router.post('/favorite/delete/:id', userController.removeFavorite);
 router.post('/favorite/:id', userController.addFavorite);
 
 //notification
+router.get('/notification/read/:id', userController.markAllRead);
 router.post('/notification/:id', userController.addNotification);
 router.get('/notification/:id', userController.getNotification);
 
