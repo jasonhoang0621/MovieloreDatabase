@@ -5,6 +5,14 @@ const cloudinary = require('../utils/cloudinary');
 
 const getAll = async () => {
     const list = await movie.find({});
+    list.forEach(item => {
+        const date = new Date(item[i].releaseDate);
+        const day = ("0" + date.getDate()).slice(-2);
+        const month = ("0" + (date.getMonth() + 1)).slice(-2);
+        const year = date.getFullYear();
+        item[i].releaseDate = day + '/' + month + '/' + year;
+    })
+
     return list;
 }
 
