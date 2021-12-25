@@ -4,16 +4,12 @@ const mongoose = require('mongoose');
 const cloudinary = require('../utils/cloudinary');
 
 const getAll = async () => {
-    const list = await movie.find({});
-    list.forEach(item => {
-        const date = new Date(item.releaseDate);
-        const day = ("0" + date.getDate()).slice(-2);
-        const month = ("0" + (date.getMonth() + 1)).slice(-2);
-        const year = date.getFullYear();
-        item.releaseDate = day + '/' + month + '/' + year;
-    })
-
-    return list;
+    try {
+        const list = await movie.find({}).lean();
+        return list;
+    } catch (err) {
+        console.log(err);
+    }
 }
 
 const createNew = async (content) => {
