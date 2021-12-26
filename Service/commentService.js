@@ -23,6 +23,7 @@ const storeNewCommnet = async (newComment) => {
 const deleteAComment = async (commentID) => {
     try {
         await comment.deleteOne({ _id: commentID })
+        await comment.deleteMany({ parentID: commentID })
     } catch (err) {
         console.log(err);
     }
